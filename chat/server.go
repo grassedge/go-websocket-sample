@@ -35,7 +35,8 @@ func (server *Server) removeClient(client *Client) {
 
 func (server *Server) sendMessage(message string) {
 	for _, client := range server.clients {
-		client.Send(message)
+		c := client
+		go func() { c.Send(message) }()
 	}
 }
 
